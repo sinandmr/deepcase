@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  node_backend:
+    container_name: dockerEnd
+    image: apiend:0.0.7
+    build:
+      context: .
+    ports:
+      - '4000:4000'
+    environment:
+      - SERVER_PORT=4000
+      - SECRET_KEY=deepcaseAPI
+      - PGDATABASE=deepcase_db
+      - PGUSER=sinan
+      - PGPASSWORD=123
+      - PGHOST=node_db
+    depends_on:
+      - node_db
+  node_db:
+    container_name: node_db
+    image: 'postgres:12'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=sinan
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=deepcase_db
+    # volumes:
+#       - nps_data: /var/lib/postgresql/data
+
+# volumes:
+#   nps_data: {}
